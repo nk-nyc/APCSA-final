@@ -37,5 +37,9 @@ class star{
   PVector getPos(){
     return pos;
   }
+  
+  color getColor(){
+    return c;
+  }
 
 }
