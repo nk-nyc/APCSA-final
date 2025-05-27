@@ -43,9 +43,26 @@ class Planet {
     return pos;
   }
   
+  void setPos(float x, float y){
+    pos.x = x;
+    pos.y = y;
+  }
+  
   color getColor(){
     return c;
   }
+    
+  float getAngle(){
+    return angle;
+  }
   
+  float getRadius(){
+    return radius;
+  }
+  
+  void updateAngle() {
+    angle += speed;
+  }
+
 
 }
