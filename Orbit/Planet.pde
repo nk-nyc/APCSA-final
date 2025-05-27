@@ -2,31 +2,32 @@
 // Sin motion + cos motion = Circular motion
 
 class Planet {
-  int a; //semimajor axis
   float radius;
   float mass;
   color c;
-  float eccentricity;
+  float b;
+  float a;
   PVector pos;
   float angle;
   float speed;
   
-  public Planet(int x, int y, int a, float mass, float e, color c){
+  public Planet(int x, int y, float mass, float a, float b, color c){
     this.a = a;
+    this.b = b;
     this.radius = a;
     this.mass = mass;
     this.c = c;
-    this.eccentricity = e;
     this.pos = new PVector(x, y);
-    angle = 0.05;
-    speed = 0.05;
+    angle = 0;
+    speed = 1;
   }
   
   public Planet(float x, float y){
-    this.radius = 100;
+    this.radius = 200;
     this.mass = 1; //earth mass
     this.c = color(random(255), random(255), random(255));
-    this.eccentricity = 1;
+    this.a = 100;
+    this.b = 200;
     this.pos = new PVector(x, y);
     this.a = 100;
   }
@@ -43,9 +44,33 @@ class Planet {
     return pos;
   }
   
+  void setPos(PVector newV){
+    pos = newV;
+  }
+  
   color getColor(){
     return c;
   }
   
+  
+  float getAngle(){
+    return angle;
+  }
+  
+  float getRadius(){
+    return radius;
+  }
+  
+  void updateAngle(){
+    this.angle += speed;
+  }
+  
+  float getA(){
+    return a;
+  }
+  
+  float getB(){
+    return b;
+  }
 
 }
