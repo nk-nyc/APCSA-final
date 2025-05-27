@@ -39,3 +39,12 @@ void drawStar(){
   fill(Sun.getColor());
   ellipse(Sun.getPos().x, Sun.getPos().y, 100, 100);
 }
+
+
+void mouseClicked() {
+ if (mouseButton == LEFT) {
+   float x = mouseX;
+   float y = mouseY;
+   planets.add(new Planet(x, y));
+ }
+}
