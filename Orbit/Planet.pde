@@ -23,13 +23,13 @@ class Planet {
   }
   
   public Planet(float x, float y){
-    this.radius = 200;
     this.mass = 1; //earth mass
     this.c = color(random(255), random(255), random(255));
-    this.a = 100;
+    this.a = dist(width/2, height/2, x, y);
+    this.radius = a;
     this.b = 200;
     this.pos = new PVector(x, y);
-    this.a = 100;
+    speed = sqrt(mass/radius)/2;
   }
   
   int scalar = 200; //modification of x
@@ -71,6 +71,10 @@ class Planet {
   
   float getB(){
     return b;
+  }
+  
+  float getSpeed(){
+    return speed;
   }
 
 }
