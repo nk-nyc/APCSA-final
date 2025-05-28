@@ -15,11 +15,10 @@ void draw(){
   for (int i = 0; i < planets.size(); i++){
     drawPlanet(planets.get(i), i);
       textSize(12);
-      text("SPEED OF PLANET " + i + ": " + planets.get(i).getSpeed(), 15, 20 + 10 * i);
+      text("SPEED OF PLANET " + i + ": " + planets.get(i).getSpeed() * 2 * 3.14 + " revolutions per second", 15, 20 + 10 * i);
   }
   
   fill(255);
-  stroke(255);
   rect(width - 100, 10,50,50);
   
 }
