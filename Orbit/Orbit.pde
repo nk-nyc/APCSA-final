@@ -25,7 +25,7 @@ void addPlanet(float x, float y){
 void drawPlanet(Planet p, int i){
   updatePlanet(p, i);
   fill(p.getColor());
-  ellipse(p.getPos().x, p.getPos().y, 50, 50);
+  ellipse(p.getPos().x, p.getPos().y, sqrt(p.getMass()) * 30, sqrt(p.getMass()) * 30);
 }
 
 void updatePlanet(Planet p, int i){
@@ -46,7 +46,12 @@ void updateAngle(int index){
 
 void mouseClicked(){
   if (mouseButton == LEFT){
-    addPlanet(mouseX, mouseY);
+    if ((mouseX < 550 && mouseX > 450) && (mouseY < 550 && mouseY > 450) ){
+      
+    }
+    else {
+        addPlanet(mouseX, mouseY);
+    }
   }
 
 }

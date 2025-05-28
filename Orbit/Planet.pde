@@ -24,29 +24,14 @@ class Planet {
   
   
   public Planet(float x, float y){
-    this.mass = 1; //earth mass
+    this.mass = random(3); //earth mass
     this.c = color(random(255), random(255), random(255));
     this.a = dist(width/2, height/2, x, y);
+    this.b = random(100, 500);
     this.radius = a;
-    this.b = 200;
     this.pos = new PVector(x, y);
-    speed = sqrt(mass/radius)/2;
+    speed = sqrt(mass/radius)/4;
   }
-  
-  public Planet(float x, float y, float angle){
-    this.angle = angle;
-    this.radius = 200;
-    this.mass = 1; //earth mass
-    this.c = color(random(255), random(255), random(255));
-    this.a = 100;
-    this.b = 200;
-    this.pos = new PVector(x, y);
-    this.a = 100;
-  }
-  
-  
-  int scalar = 200; //modification of x
-  int scalar2 = 100; //modification of y
 
   //float x = radius + sin(angle) * scalar2;
   //float y = radius + cos(angle) * scalar;
@@ -88,6 +73,10 @@ class Planet {
   
   float getSpeed(){
     return speed;
+  }
+  
+  float getMass(){
+    return mass;
   }
 
 }
