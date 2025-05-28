@@ -1,6 +1,7 @@
 star Sun = new star(500, 500, 1.0);
 ArrayList<Planet> planets = new ArrayList<Planet>();
 final float G = 0.00000000000667;
+ArrayList<Float> angles = new ArrayList<Float>();
 float angle = 0;
 
 void setup(){
@@ -30,8 +31,8 @@ void drawPlanet(Planet p){
 
 void updatePlanet(Planet p){
   angle += 0.05;
-  float x = p.getA() * cos(angle) + Sun.getPos().x;
-  float y = p.getB() * sin(angle)  + Sun.getPos().y ;
+  float x = Sun.getPos().x + p.getA() * cos(angle);
+  float y = Sun.getPos().y + p.getB() * sin(angle);
   p.setPos(new PVector(x, y));
 }
 
@@ -43,8 +44,8 @@ void drawStar(){
 
 void mouseClicked() {
  if (mouseButton == LEFT) {
-   float x = mouseX;
-   float y = mouseY;
+   int x = mouseX;
+   int y = mouseY;
    planets.add(new Planet(x, y));
  }
 }
