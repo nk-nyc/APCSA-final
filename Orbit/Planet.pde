@@ -22,6 +22,7 @@ class Planet {
     speed = 1;
   }
   
+  
   public Planet(float x, float y){
     this.mass = 1; //earth mass
     this.c = color(random(255), random(255), random(255));
@@ -31,6 +32,18 @@ class Planet {
     this.pos = new PVector(x, y);
     speed = sqrt(mass/radius)/2;
   }
+  
+  public Planet(float x, float y, float angle){
+    this.angle = angle;
+    this.radius = 200;
+    this.mass = 1; //earth mass
+    this.c = color(random(255), random(255), random(255));
+    this.a = 100;
+    this.b = 200;
+    this.pos = new PVector(x, y);
+    this.a = 100;
+  }
+  
   
   int scalar = 200; //modification of x
   int scalar2 = 100; //modification of y

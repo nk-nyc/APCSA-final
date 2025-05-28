@@ -1,6 +1,5 @@
 star Sun = new star(500, 500, 1.0);
 ArrayList<Planet> planets = new ArrayList<Planet>();
-final float G = 0.00000000000667;
 ArrayList<Float> angles = new ArrayList<Float>();
 
 void setup(){
@@ -49,4 +48,5 @@ void mouseClicked(){
   if (mouseButton == LEFT){
     addPlanet(mouseX, mouseY);
   }
+
 }
