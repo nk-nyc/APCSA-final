@@ -6,6 +6,7 @@ boolean menuOpen = false;
 
 final int btnX = 900, btnY = 10, btnW = 80, btnH = 30;
 final int menuBtnX = 900, menuBtnY = 50, menuBtnW = 80, menuBtnH = 30;
+//final int menuBtnX = 900, menuBtnY = 50, menuBtnW = 80, menuBtnH = 30;
 
 void setup(){
   size(1000, 1000);
@@ -35,6 +36,7 @@ void draw(){
   } else {
     fill(50);
   }
+  stroke(0);
   rect(btnX, btnY, btnW, btnH);
   
   String label;
@@ -52,6 +54,7 @@ void draw(){
 
 
 void drawPlanet(Planet p){
+  stroke(p.getColor());
   fill(p.getColor());
   ellipse(p.getPos().x, p.getPos().y, 
           sqrt(p.getMass()) * 30, 
@@ -88,6 +91,7 @@ void updatePlanet(Planet p, int i){
 }
 
 void drawStar(){
+  stroke(Sun.getColor());
   fill(Sun.getColor());
   ellipse(Sun.getPos().x, Sun.getPos().y, 100, 100);
 }
