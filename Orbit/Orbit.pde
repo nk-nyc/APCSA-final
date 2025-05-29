@@ -19,16 +19,15 @@ void draw(){
   background(0);
   drawStar();
   
-  for (int i = 0; i < planets.size(); i++){
+  for (int i = 1; i < planets.size(); i++){
     Planet p = planets.get(i);
     drawPlanet(p);
     if (!paused) {
       updatePlanet(p, i);
     }
     textSize(12);
-    text("SPEED OF PLANET " + i + ": " + 
-          p.getSpeed() * 2 * 3.14 + 
-          " revolutions per year", 
+    text("PERIOD OF PLANET " + i + ": " +  (2 * 3.14) / (p.getSpeed() * Sun.getMass() * 100)
+          + "years", 
           15, 20 + 10 * i);
   }
   
