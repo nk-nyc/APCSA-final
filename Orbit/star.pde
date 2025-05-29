@@ -41,5 +41,40 @@ class star{
   color getColor(){
     return c;
   }
+  
+  void changeMass(){
+    if (mass == 1.0){
+      mass = 2.0;
+    }
+    else if (mass == 2.0){
+      mass = 0.5;
+    }
+    else {
+      mass = 1.0;
+    }
+    float m = mass;
+    if (m > 6.6){
+      this.c = color(181, 186, 245);
+    }
+    else if (m > 1.8){
+      this.c = color(181, 215, 245);
+    }
+    else if (m > 1.4){
+      this.c = color(220, 237, 252);
+    }
+    else if (m > 1.1){
+      this.c = color(237, 240, 242);
+    }
+    else if (m > 0.9){
+      this.c = color(255, 248, 232);
+    }
+    else if (m > 0.7){
+      this.c = color(245, 223, 166);
+    }
+    else {
+      this.c = color(245, 182, 135);
+    }
+    
+  }
 
 }
