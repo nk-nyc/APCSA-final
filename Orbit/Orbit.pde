@@ -1,10 +1,14 @@
 star Sun = new star(500, 500, 1.0);
 ArrayList<Planet> planets = new ArrayList<Planet>();
 ArrayList<Float> angles = new ArrayList<Float>();
+boolean paused = false;
+boolean menuOpen = false;
+
+final int btnX = 900, btnY = 10, btnW = 80, btnH = 30;
+final int menuBtnX = 900, menuBtnY = 50, menuBtnW = 80, menuBtnH = 30;
 
 void setup(){
   size(1000, 1000);
-  background(0);
   smooth();
   addPlanet(Sun.getPos().x, Sun.getPos().y);
 }
@@ -12,52 +16,78 @@ void setup(){
 void draw(){
   background(0);
   drawStar();
+  
   for (int i = 0; i < planets.size(); i++){
-    drawPlanet(planets.get(i), i);
-      textSize(12);
-      text("SPEED OF PLANET " + i + ": " + planets.get(i).getSpeed() * 2 * 3.14 + " revolutions per second", 15, 20 + 10 * i);
+    Planet p = planets.get(i);
+    drawPlanet(p);
+    if (!paused) {
+      updatePlanet(p, i);
+    }
+    textSize(12);
+    text("SPEED OF PLANET " + i + ": " + 
+          p.getSpeed() * 2 * 3.14 + 
+          " revolutions per second", 
+          15, 20 + 10 * i);
   }
   
-  fill(255);
-  rect(width - 100, 10,50,50);
+  if (paused) {
+    fill(150);
+  } else {
+    fill(50);
+  }
+  rect(btnX, btnY, btnW, btnH);
   
+  String label;
+  if(paused) {
+    label = "Resume";
+  } else {
+    label = "Pause";
+  }
+  fill(255);
+  textAlign(CENTER, CENTER);
+  text(label, btnX + btnW/2, btnY + btnH/2);
+  textAlign(LEFT, BASELINE);
+  
+}
+
+
+void drawPlanet(Planet p){
+  fill(p.getColor());
+  ellipse(p.getPos().x, p.getPos().y, 
+          sqrt(p.getMass()) * 30, 
+          sqrt(p.getMass()) * 30);
+}
+
+
+void mouseClicked(){
+  if (mouseX >= btnX && mouseX <= btnX+btnW &&
+      mouseY >= btnY && mouseY <= btnY+btnH) {
+    paused = !paused;
+    return;
+  }
+  
+  if (mouseButton == LEFT){
+    addPlanet(mouseX, mouseY);
+  }
 }
 
 void addPlanet(float x, float y){
-  planets.add(new Planet(x, y));
-  angles.add(0.0);
-}
-
-void drawPlanet(Planet p, int i){
-  updatePlanet(p, i);
-  fill(p.getColor());
-  ellipse(p.getPos().x, p.getPos().y, sqrt(p.getMass()) * 30, sqrt(p.getMass()) * 30);
+  Planet p = new Planet(x, y);
+  float theta = atan2((y - Sun.getPos().y)/ p.getB(),
+                      (x - Sun.getPos().x) / p.getA());
+  planets.add(p);
+  angles.add(theta);
 }
 
 void updatePlanet(Planet p, int i){
-  float x = p.getA() * cos(angles.get(i)) + Sun.getPos().x;
-  float y = p.getB() * sin(angles.get(i))  + Sun.getPos().y ;
+  float theta = angles.get(i);
+  float x = p.getA() * cos(theta) + Sun.getPos().x;
+  float y = p.getB() * sin(theta) + Sun.getPos().y ;
   p.setPos(new PVector(x, y));
-  updateAngle(i);
+  angles.set(i, theta + p.getSpeed());
 }
 
 void drawStar(){
   fill(Sun.getColor());
   ellipse(Sun.getPos().x, Sun.getPos().y, 100, 100);
-}
-
-void updateAngle(int index){
-  angles.set(index, angles.get(index) + planets.get(index).getSpeed());
-}
-
-void mouseClicked(){
-  if (mouseButton == LEFT){
-    if ((mouseX < 550 && mouseX > 450) && (mouseY < 550 && mouseY > 450) ){
-      
-    }
-    else {
-        addPlanet(mouseX, mouseY);
-    }
-  }
-
 }
