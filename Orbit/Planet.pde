@@ -25,7 +25,7 @@ class Planet {
   
   public Planet(float x, float y){
     this.mass = random(3); //earth mass
-    this.c = color(random(255), random(255), random(255));
+    this.c = color(random(100, 255), random(100, 255), random(100, 255));
     this.a = dist(width/2, height/2, x, y);
     this.b = random(100, 500);
     this.radius = a;
@@ -77,6 +77,10 @@ class Planet {
   
   float getMass(){
     return mass;
+  }
+  
+  void setRadius(float r){
+    this.a = r;
   }
 
 }
