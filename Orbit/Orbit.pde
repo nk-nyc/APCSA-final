@@ -21,7 +21,7 @@ void draw(){
   background(0);
   drawStar();
   text("MASS OF STAR: " + 
-      Sun.getMass(),
+      Sun.getMass() + " SOLAR MASSES",
       15, 20);
 
   for (int i = 1; i < planets.size(); i++){
@@ -33,7 +33,7 @@ void draw(){
    
     textSize(12);
     text("PERIOD OF PLANET " + i + ": " +  (2 * 3.14) / (p.getSpeed() * Sun.getMass() * 100)
-          + "years", 
+          + " YEARS", 
           15, 20 + 10 * i);
   }
   
