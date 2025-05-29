@@ -6,7 +6,9 @@ boolean menuOpen = false;
 final int planetLimit = 10;
 
 final int btnX = 900, btnY = 10, btnW = 80, btnH = 30;
-final int menuBtnX = 900, menuBtnY = 50, menuBtnW = 80, menuBtnH = 30;
+final int speedUpX = 900, speedUpY = 50,
+          speedUpX2 = 80, speedUpY2 = 30,
+          speedUpX3 = 90, speedUpY3 = 40;
 //final int menuBtnX = 900, menuBtnY = 50, menuBtnW = 80, menuBtnH = 30;
 
 void setup(){
@@ -18,18 +20,22 @@ void setup(){
 void draw(){
   background(0);
   drawStar();
-  
-  for (int i = 0; i < planets.size(); i++){
+  text("MASS OF STAR: " + 
+      Sun.getMass(),
+      15, 20);
+
+  for (int i = 1; i < planets.size(); i++){
     Planet p = planets.get(i);
     drawPlanet(p);
     if (!paused) {
       updatePlanet(p, i);
     }
+   
     textSize(12);
     text("SPEED OF PLANET " + i + ": " + 
           p.getSpeed() * 2 * 3.14 + 
           " revolutions per year", 
-          15, 20 + 10 * i);
+          15, 30 + 10 * (i - 1));
   }
   
   if (paused) {
@@ -39,6 +45,8 @@ void draw(){
   }
   stroke(0);
   rect(btnX, btnY, btnW, btnH);
+  
+  triangle(speedUpX, speedUpY, speedUpX2, speedUpY2, speedUpX3, speedUpY3);
   
   String label;
   if(paused) {
