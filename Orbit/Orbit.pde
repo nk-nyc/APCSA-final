@@ -2,13 +2,15 @@ star Sun = new star(500, 500, 1.0);
 ArrayList<Planet> planets = new ArrayList<Planet>();
 ArrayList<Float> angles = new ArrayList<Float>();
 boolean paused = false;
+boolean faster = false;
 boolean menuOpen = false;
 final int planetLimit = 10;
 
 final int btnX = 900, btnY = 10, btnW = 80, btnH = 30;
-final int speedUpX = 900, speedUpY = 50,
-          speedUpX2 = 80, speedUpY2 = 30,
-          speedUpX3 = 90, speedUpY3 = 40;
+final int speedUpX = 945, speedUpY = 50,
+          speedUpX2 = 945, speedUpY2 = 90,
+          speedUpX3 = 980, speedUpY3 = 70;
+
 //final int menuBtnX = 900, menuBtnY = 50, menuBtnW = 80, menuBtnH = 30;
 
 void setup(){
@@ -29,6 +31,9 @@ void draw(){
     drawPlanet(p);
     if (!paused) {
       updatePlanet(p, i);
+        if (faster) {
+        updatePlanet(p, i);
+      }
     }
    
     textSize(12);
@@ -42,9 +47,15 @@ void draw(){
   } else {
     fill(50);
   }
+  
   stroke(0);
   rect(btnX, btnY, btnW, btnH);
   
+  if (faster) {
+    fill(150);
+  } else {
+    fill(50);
+  }
   triangle(speedUpX, speedUpY, speedUpX2, speedUpY2, speedUpX3, speedUpY3);
   
   String label;
@@ -74,6 +85,13 @@ void mouseClicked(){
   if (mouseX >= btnX && mouseX <= btnX+btnW &&
       mouseY >= btnY && mouseY <= btnY+btnH) {
     paused = !paused;
+    return;
+  }
+  
+  
+  if (mouseX >= speedUpX && mouseX <= speedUpX+speedUpX2 &&
+      mouseY >= speedUpY && mouseY <= speedUpY+speedUpY2) {
+    faster = !faster;
     return;
   }
   
