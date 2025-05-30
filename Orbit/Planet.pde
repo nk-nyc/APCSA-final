@@ -10,22 +10,12 @@ class Planet {
   PVector pos;
   float angle;
   float speed;
-  
-  public Planet(int x, int y, float mass, float a, float b, color c){
-    this.a = a;
-    this.b = b;
-    this.radius = a;
-    this.mass = mass;
-    this.c = c;
-    this.pos = new PVector(x, y);
-    angle = 0;
-    speed = 1;
-  }
-  
-  
+  final color[] colors = {#79a3e8, #a18d65, #5a8a7d, #8a665a, #d9bebd, 
+                          #d9a179, #79b6d9, #284f66, #9e352f, #b8b8b8};
+
   public Planet(float x, float y){
     this.mass = random(3); //earth mass
-    this.c = color(random(100, 255), random(100, 255), random(100, 255));
+    this.c = colors[(int)random(colors.length)];
     this.a = dist(width/2, height/2, x, y);
     this.b = random(100, 500);
     this.radius = a;
