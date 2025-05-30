@@ -1,4 +1,4 @@
-star Sun = new star(500, 500, 1.0);
+star Sun = new star(500, 500);
 ArrayList<Planet> planets = new ArrayList<Planet>();
 ArrayList<Float> angles = new ArrayList<Float>();
 boolean paused = false;
@@ -125,7 +125,7 @@ void mouseClicked(){
     if (slower) faster = false;
     return;
   }
-  else if (dist(mouseX, mouseY, Sun.getPos().x, Sun.getPos().y) < 100){
+  else if (dist(mouseX, mouseY, Sun.getPos().x, Sun.getPos().y) < 200){
     Sun.changeMass();
     for (Planet p : planets){
       p.setRadius(p.getRadius() / sqrt(Sun.getMass()));
@@ -151,7 +151,7 @@ void updatePlanet(Planet p, int i, float mult){
   float x = p.getA() * cos(theta) + Sun.getPos().x;
   float y = p.getB() * sin(theta) + Sun.getPos().y ;
   p.setPos(new PVector(x, y));
-  angles.set(i, theta + p.getSpeed() * Sun.getMass() * mult);
+  angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
 }
 
 void drawStar(){

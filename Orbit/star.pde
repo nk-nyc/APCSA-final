@@ -1,37 +1,21 @@
 class star{
 
   PVector pos;
-  color c;
-  float mass; //mass in solar masses
+  color[] c = {color(245, 182, 135), color(245, 223, 166), color(255, 248, 232), color(237, 240, 242),
+                color(220, 237, 252),  color(181, 215, 245)};
+  float[] temps = {2000, 3000, 4000, 6000, 8000, 13000};
+  float[] masses = {0.2, 0.5, 0.7, 1.1, 1.5, 3.1}; 
+  int col = 0;
+  int mass = 0;
+  int temp = 0;
+  //mass in solar masses
   
-  star(float x, float y, float m){
+  star(float x, float y){
     pos = new PVector(x, y);
-    this.mass = m;
-    if (m > 6.6){
-      this.c = color(181, 186, 245);
-    }
-    else if (m > 1.8){
-      this.c = color(181, 215, 245);
-    }
-    else if (m > 1.4){
-      this.c = color(220, 237, 252);
-    }
-    else if (m > 1.1){
-      this.c = color(237, 240, 242);
-    }
-    else if (m > 0.9){
-      this.c = color(255, 248, 232);
-    }
-    else if (m > 0.7){
-      this.c = color(245, 223, 166);
-    }
-    else {
-      this.c = color(245, 182, 135);
-    }
   }
   
   float getMass(){
-    return mass;
+    return masses[mass];
   }
   
   PVector getPos(){
@@ -39,42 +23,24 @@ class star{
   }
   
   color getColor(){
-    return c;
+    return c[col];
+  }
+  
+  float getTemp(){
+    return temps[temp];
   }
   
   void changeMass(){
-    if (mass == 1.0){
-      mass = 2.0;
-    }
-    else if (mass == 2.0){
-      mass = 0.5;
-    }
-    else {
-      mass = 1.0;
-    }
-    float m = mass;
-    if (m > 6.6){
-      this.c = color(181, 186, 245);
-    }
-    else if (m > 1.8){
-      this.c = color(181, 215, 245);
-    }
-    else if (m > 1.4){
-      this.c = color(220, 237, 252);
-    }
-    else if (m > 1.1){
-      this.c = color(237, 240, 242);
-    }
-    else if (m > 0.9){
-      this.c = color(255, 248, 232);
-    }
-    else if (m > 0.7){
-      this.c = color(245, 223, 166);
+    if (mass != masses.length - 1){
+      mass++;
+      temp++;
+      col++;
     }
     else {
-      this.c = color(245, 182, 135);
+      mass = 0;
+      temp = 0;
+      col = 0;
     }
-    
   }
 
 }
