@@ -4,14 +4,15 @@ ArrayList<Float> angles = new ArrayList<Float>();
 boolean paused = false;
 boolean faster = false;
 boolean slower = false;
+boolean reset = false;
 boolean menuOpen = false;
 final int planetLimit = 10;
 
 final int btnX = 900, btnY = 10, btnW = 80, btnH = 30;
 final int speedUpX = 945, speedUpX3 = 980;
-final int speedY = 50, speedY2 = 90, speedY3 = 70;
 final int slowX = 935, slowX3 = 900;
-//final int menuBtnX = 900, menuBtnY = 50, menuBtnW = 80, menuBtnH = 30;
+final int speedY = 50, speedY2 = 90, speedY3 = 70;
+final int resetX = 900, resetY = 100, resetW = 80, resetH = 30;
 
 void setup(){
   size(1000, 1000);
@@ -36,10 +37,27 @@ void draw(){
     updatePlanet(p, i, mult);
 
     textSize(12);
-    text("PERIOD OF PLANET " + i + ": " +  (2 * 3.14) / (p.getSpeed() * Sun.getMass() * 100)
+    text("PERIOD OF PLANET " + i + ": " +  (double)
+    (Math.round((2 * 3.14 * 100.0) / (p.getSpeed() * Sun.getMass() * 100)))/100
           + " YEARS", 
           15, 20 + 10 * i);
   }
+  
+  if (reset) planets.clear(); reset = false;
+  
+  //Buttons
+  if (reset) {
+    fill(150);
+  } else {
+    fill(50);
+  }
+  stroke(0);
+  rect(resetX, resetY, resetW, resetH);
+  String label = "Reset";
+  fill(255);
+  textAlign(CENTER, CENTER);
+  text(label, resetX + resetW/2, resetY + resetH/2);
+  textAlign(LEFT, BASELINE);
   
   
   if (paused) {
@@ -49,6 +67,17 @@ void draw(){
   }
   stroke(0);
   rect(btnX, btnY, btnW, btnH);
+  String label2;
+  if(paused) {
+    label2 = "Resume";
+  } else {
+    label2 = "Pause";
+  }
+  fill(255);
+  textAlign(CENTER, CENTER);
+  text(label2, btnX + btnW/2, btnY + btnH/2);
+  textAlign(LEFT, BASELINE);
+  
   
   if (faster) {
     fill(150);
@@ -63,17 +92,7 @@ void draw(){
     fill(50);
   }
   triangle(slowX, speedY, slowX, speedY2, slowX3, speedY3);
-  
-  String label;
-  if(paused) {
-    label = "Resume";
-  } else {
-    label = "Pause";
-  }
-  fill(255);
-  textAlign(CENTER, CENTER);
-  text(label, btnX + btnW/2, btnY + btnH/2);
-  textAlign(LEFT, BASELINE);
+ 
   
 }
 
@@ -88,6 +107,10 @@ void drawPlanet(Planet p){
 
 
 void mouseClicked(){
+  if (hitBox(resetX, resetX+resetW, resetY, resetY+resetH)) {
+    reset = true;
+    return;
+  }
   if (hitBox(btnX, btnX+btnW, btnY, btnY+btnH)) {
     paused = !paused;
     return;
