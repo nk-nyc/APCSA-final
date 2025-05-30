@@ -7,6 +7,7 @@ boolean slower = false;
 boolean reset = false;
 boolean menuOpen = false;
 final int planetLimit = 10;
+boolean blackHole = false;
 
 final int btnX = 900, btnY = 10, btnW = 80, btnH = 30;
 final int speedUpX = 945, speedUpX3 = 980;
@@ -21,29 +22,46 @@ void setup(){
 }
 
 void draw(){
-  background(0);
-  drawStar();
-  text("MASS OF STAR: " + 
-      Sun.getMass() + " SOLAR MASSES",
-      15, 20);
+        float mult = 1.0;
+      if (paused) mult = 0;
+      else if (faster) mult = 2.0;
+      else if (slower) mult = 0.5;
+  if (!blackHole){
+    background(0);
+    drawStar();
+    text("MASS OF STAR: " + 
+        Sun.getMass() + " SOLAR MASSES",
+        15, 20);
+  
+    for (int i = 1; i < planets.size(); i++){
+      Planet p = planets.get(i);
+      drawPlanet(p);
 
-  for (int i = 1; i < planets.size(); i++){
-    Planet p = planets.get(i);
-    drawPlanet(p);
-    float mult = 1.0;
-    if (paused) mult = 0;
-    else if (faster) mult = 2.0;
-    else if (slower) mult = 0.5;
-    updatePlanet(p, i, mult);
-
-    textSize(12);
-    text("PERIOD OF PLANET " + i + ": " +  (double)
-    (Math.round((2 * 3.14 * 100.0) / (p.getSpeed() * Sun.getMass() * 100)))/100
-          + " YEARS", 
-          15, 20 + 10 * i);
+      updatePlanet(p, i, mult);
+  
+      textSize(12);
+      text("PERIOD OF PLANET " + i + ": " +  (double)
+      (Math.round((2 * 3.14 * 100.0) / (p.getSpeed() * Sun.getMass() * 100)))/100
+            + " YEARS", 
+            15, 20 + 10 * i);
+    }
+    
+    if (reset) planets.clear(); reset = false;
   }
   
-  if (reset) planets.clear(); reset = false;
+  else {
+    background(0);
+    fill(#fff1d6);
+    ellipse(Sun.getPos().x, Sun.getPos().y, 135, 135);
+    fill(0);
+    ellipse(Sun.getPos().x, Sun.getPos().y, 130, 130);
+    for (int i = 0; i < planets.size(); i++){
+      planets.get(i).setRadius(planets.get(i).getA() - 10);
+      planets.get(i).setB(planets.get(i).getB() - 10);
+      drawPlanet(planets.get(i));
+      updatePlanet(planets.get(i), i, mult);
+    }
+  }
   
   //Buttons
   if (reset) {
@@ -125,7 +143,7 @@ void mouseClicked(){
     if (slower) faster = false;
     return;
   }
-  else if (dist(mouseX, mouseY, Sun.getPos().x, Sun.getPos().y) < 200){
+  else if (dist(mouseX, mouseY, Sun.getPos().x, Sun.getPos().y) < 170){
     Sun.changeMass();
     for (Planet p : planets){
       p.setRadius(p.getRadius() / sqrt(Sun.getMass()));
