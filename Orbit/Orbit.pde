@@ -36,7 +36,8 @@ void draw(){
     updatePlanet(p, i, mult);
 
     textSize(12);
-    text("PERIOD OF PLANET " + i + ": " +  (2 * 3.14) / (p.getSpeed() * Sun.getMass() * 100)
+    text("PERIOD OF PLANET " + i + ": " +  (double)
+    (Math.round((2 * 3.14 * 100.0) / (p.getSpeed() * Sun.getMass() * 100)))/100
           + " YEARS", 
           15, 20 + 10 * i);
   }
