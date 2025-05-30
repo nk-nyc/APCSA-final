@@ -5,14 +5,15 @@ boolean paused = false;
 boolean faster = false;
 boolean slower = false;
 boolean reset = false;
-boolean menuOpen = false;
+boolean blackhole = false;
 final int planetLimit = 10;
 
 final int btnX = 900, btnY = 10, btnW = 80, btnH = 30;
+final int resetX = 900, resetY = 100, resetW = 80, resetH = 30;
+final int blackBtnX = 900, blackBtnY = 140, blackBtnW = 80, blackBtnH = 30;
 final int speedUpX = 945, speedUpX3 = 980;
 final int slowX = 935, slowX3 = 900;
 final int speedY = 50, speedY2 = 90, speedY3 = 70;
-final int resetX = 900, resetY = 100, resetW = 80, resetH = 30;
 
 void setup(){
   size(1000, 1000);
@@ -76,6 +77,20 @@ void draw(){
   fill(255);
   textAlign(CENTER, CENTER);
   text(label2, btnX + btnW/2, btnY + btnH/2);
+  textAlign(LEFT, BASELINE);
+  
+  
+  if (blackhole) {
+    fill(150);
+  } else {
+    fill(50);
+  }
+  stroke(0);
+  rect(blackBtnX, blackBtnY, blackBtnW, blackBtnH);
+  String label3 = "Black hole!!";
+  fill(255);
+  textAlign(CENTER, CENTER);
+  text(label3, blackBtnX + blackBtnW/2, blackBtnY + blackBtnH/2);
   textAlign(LEFT, BASELINE);
   
   
