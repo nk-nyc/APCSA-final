@@ -72,5 +72,11 @@ class Planet {
   void setRadius(float r){
     this.a = r;
   }
+  
+  void setB(float r){
+    this.b = r;
+  }
+  
+  
 
 }
