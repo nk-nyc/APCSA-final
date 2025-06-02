@@ -1,12 +1,14 @@
+import  java.util.*;
+
 star Sun = new star(500, 500);
+final int planetLimit = 10;
 ArrayList<Planet> planets = new ArrayList<Planet>();
 ArrayList<Float> angles = new ArrayList<Float>();
+LinkedList<PVector> trail = new LinkedList<PVector>();
 boolean paused = false;
 boolean faster = false;
 boolean slower = false;
 boolean reset = false;
-boolean blackhole = false;
-final int planetLimit = 10;
 boolean blackHole = false;
 
 final int btnX = 900, btnY = 10, btnW = 80, btnH = 30;
@@ -18,15 +20,16 @@ final int speedY = 50, speedY2 = 90, speedY3 = 70;
 
 void setup(){
   size(1000, 1000);
+  
   smooth();
   addPlanet(Sun.getPos().x, Sun.getPos().y);
 }
 
 void draw(){
-        float mult = 1.0;
-      if (paused) mult = 0;
-      else if (faster) mult = 2.0;
-      else if (slower) mult = 0.5;
+  float mult = 1.0;
+  if (paused) mult = 0;
+  else if (faster) mult = 2.0;
+  else if (slower) mult = 0.5;
   if (!blackHole){
     background(0);
     drawStar();
@@ -98,7 +101,7 @@ void draw(){
   textAlign(LEFT, BASELINE);
   
   
-  if (blackhole) {
+  if (blackHole) {
     fill(150);
   } else {
     fill(50);
@@ -125,7 +128,16 @@ void draw(){
     fill(50);
   }
   triangle(slowX, speedY, slowX, speedY2, slowX3, speedY3);
- 
+  
+  stroke(255);
+  if (trail.size() >= 2) {
+    PVector currentPoint, lastPoint = trail.get(0);
+    for (int i = 0; i < trail.size(); i++) {
+      currentPoint = trail.get(i);
+      line(lastPoint.x, lastPoint.y, currentPoint.x, currentPoint.y);
+      lastPoint = currentPoint;
+     }
+   }
   
 }
 
@@ -167,6 +179,7 @@ void mouseClicked(){
   else if (mouseButton == LEFT){
     addPlanet(mouseX, mouseY);
   }
+ 
 }
 
 void addPlanet(float x, float y){
@@ -185,6 +198,11 @@ void updatePlanet(Planet p, int i, float mult){
   float y = p.getB() * sin(theta) + Sun.getPos().y ;
   p.setPos(new PVector(x, y));
   angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
+  
+  trail.addFirst(new PVector(x, y));
+  while (trail.size() > 10) {
+    trail.removeLast();
+  }
 }
 
 void drawStar(){
