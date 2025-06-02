@@ -8,6 +8,7 @@ class star{
   int col = 0;
   int mass = 0;
   int temp = 0;
+  boolean blackHole = false;
   //mass in solar masses
   
   star(float x, float y){
@@ -15,6 +16,9 @@ class star{
   }
   
   float getMass(){
+    if (blackHole){
+      return mass;
+    }
     return masses[mass];
   }
   
@@ -30,16 +34,27 @@ class star{
     return temps[temp];
   }
   
+  void toggleBlackHole(){
+    blackHole = !blackHole;
+    mass = 0;
+    col = 0;
+  }
+  
   void changeMass(){
-    if (mass != masses.length - 1){
-      mass++;
-      temp++;
-      col++;
+    if (blackHole){
+      mass = 100;
     }
     else {
-      mass = 0;
-      temp = 0;
-      col = 0;
+      if (mass != masses.length - 1){
+        mass++;
+        temp++;
+        col++;
+      }
+      else {
+        mass = 0;
+        temp = 0;
+        col = 0;
+      }
     }
   }
 

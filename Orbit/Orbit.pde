@@ -25,7 +25,11 @@ void setup(){
 void draw(){
         float mult = 1.0;
       if (paused) mult = 0;
+      if (blackHole) mult = 3.0;
+      if (blackHole && faster) mult = 4.0;
       else if (faster) mult = 2.0;
+      if (blackHole && slower) mult = 2.0;
+      
       else if (slower) mult = 0.5;
   if (!blackHole){
     background(0);
@@ -52,16 +56,44 @@ void draw(){
   
   else {
     background(0);
-    fill(#fff1d6);
-    ellipse(Sun.getPos().x, Sun.getPos().y, 135, 135);
+    if (planets.size() > 0) {
+      for (int i = 1; i < planets.size(); i++){
+        if (dist(planets.get(i).getPos().x, planets.get(i).getPos().y, Sun.getPos().x, Sun.getPos().y) < 70){
+          planets.remove(i);
+          angles.remove(i);
+        }
+        
+        else if (planets.get(i).getA() >= 70){
+          planets.get(i).setRadius(planets.get(i).getA() - 1);
+        }
+         
+        else if (planets.get(i).getB() >= 70){
+          planets.get(i).setB(planets.get(i).getB() - 1);
+        }
+        if (i < planets.size()){
+          drawPlanet(planets.get(i));
+          updatePlanet(planets.get(i), i, mult);   
+        }
+      }
+    }
+    fill(255);
+    text("MASS OF STAR: " + 
+    Sun.getMass() + " SOLAR MASSES",
+    15, 20);
+    stroke(255);
     fill(0);
     ellipse(Sun.getPos().x, Sun.getPos().y, 130, 130);
-    for (int i = 0; i < planets.size(); i++){
-      planets.get(i).setRadius(planets.get(i).getA() - 10);
-      planets.get(i).setB(planets.get(i).getB() - 10);
-      drawPlanet(planets.get(i));
-      updatePlanet(planets.get(i), i, mult);
+  
+    for (int i = 1; i < planets.size(); i++){
+      fill(255);
+      textSize(12);
+      text("PERIOD OF PLANET " + i + ": " +  (double)
+      (Math.round((2 * 3.14 * 100.0) / (planets.get(i).getSpeed() * Sun.getMass() * 100)))/100
+            + " YEARS", 
+            15, 20 + 10 * i);
     }
+    
+    if (reset) planets.clear(); reset = false;
   }
   
   //Buttons
@@ -158,6 +190,11 @@ void mouseClicked(){
     if (slower) faster = false;
     return;
   }
+  if (hitBox(blackBtnX, blackBtnX + blackBtnW, blackBtnY, blackBtnY + blackBtnH)){
+    blackHole = !blackHole;
+    Sun.toggleBlackHole();
+    Sun.changeMass();
+  }
   else if (dist(mouseX, mouseY, Sun.getPos().x, Sun.getPos().y) < 170){
     Sun.changeMass();
     for (Planet p : planets){
@@ -184,7 +221,13 @@ void updatePlanet(Planet p, int i, float mult){
   float x = p.getA() * cos(theta) + Sun.getPos().x;
   float y = p.getB() * sin(theta) + Sun.getPos().y ;
   p.setPos(new PVector(x, y));
-  angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
+  if (blackHole){
+    angles.set(i, theta + p.getSpeed() * mult);
+  }
+  else {
+    angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
+  }
+
 }
 
 void drawStar(){
