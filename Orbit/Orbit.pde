@@ -206,7 +206,7 @@ void mouseClicked(){
     Sun.toggleBlackHole();
     Sun.changeMass();
   }
-  else if (dist(mouseX, mouseY, Sun.getPos().x, Sun.getPos().y) < 170){
+  else if (dist(mouseX, mouseY, Sun.getPos().x, Sun.getPos().y) < 150){
     Sun.changeMass();
     for (Planet p : planets){
       p.setRadius(p.getRadius() / sqrt(Sun.getMass()));
