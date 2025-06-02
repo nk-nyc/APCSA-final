@@ -1,7 +1,7 @@
 import  java.util.*;
 
 star Sun = new star(500, 500);
-final int planetLimit = 10;
+final int planetLimit = 20;
 ArrayList<Planet> planets = new ArrayList<Planet>();
 ArrayList<Float> angles = new ArrayList<Float>();
 LinkedList<PVector> trail = new LinkedList<PVector>();
@@ -66,6 +66,15 @@ void draw(){
       updatePlanet(planets.get(i), i, mult);
     }
   }
+  stroke(255);
+  if (trail.size() >= 2) {
+    PVector currentPoint, lastPoint = trail.get(0);
+    for (int j = 0; j < trail.size(); j++) {
+      currentPoint = trail.get(j);
+      circle(lastPoint.x, lastPoint.y, 1.0);
+      lastPoint = currentPoint;
+     }
+   }
   
   //Buttons
   if (reset) {
@@ -129,16 +138,6 @@ void draw(){
   }
   triangle(slowX, speedY, slowX, speedY2, slowX3, speedY3);
   
-  stroke(255);
-  if (trail.size() >= 2) {
-    PVector currentPoint, lastPoint = trail.get(0);
-    for (int i = 0; i < trail.size(); i++) {
-      currentPoint = trail.get(i);
-      line(lastPoint.x, lastPoint.y, currentPoint.x, currentPoint.y);
-      lastPoint = currentPoint;
-     }
-   }
-  
 }
 
 
@@ -200,7 +199,7 @@ void updatePlanet(Planet p, int i, float mult){
   angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
   
   trail.addFirst(new PVector(x, y));
-  while (trail.size() > 10) {
+  while (trail.size() > 500) {
     trail.removeLast();
   }
 }
