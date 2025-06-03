@@ -34,6 +34,7 @@ void draw(){
       if (blackHole && slower) mult = 2.0;
       
       else if (slower) mult = 0.5;
+      
   if (!blackHole){
     background(0);
     drawStar();
@@ -189,6 +190,8 @@ void mouseClicked(){
   }
   if (hitBox(btnX, btnX+btnW, btnY, btnY+btnH)) {
     paused = !paused;
+    slower = false;
+    faster = false;
     return;
   }
   if (hitBox(speedUpX, speedUpX3, speedY, speedY2)) {
