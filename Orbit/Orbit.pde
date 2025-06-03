@@ -229,23 +229,47 @@ void addPlanet(float x, float y){
 }
 
 void updatePlanet(Planet p, int i, float mult){
-  float theta = angles.get(i);
-  float x = p.getA() * cos(theta) + Sun.getPos().x;
-  float y = p.getB() * sin(theta) + Sun.getPos().y ;
-  p.setPos(new PVector(x, y));
-  angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
-  
-  trail.addFirst(new PVector(x, y));
-  while (trail.size() > 500) {
-    trail.removeLast();
-  }
-  if (blackHole){
-    angles.set(i, theta + p.getSpeed() * mult);
-  }
-  else {
+  boolean collision = false;
+  //collision
+  for (int j = 0; j < planets.size(); j++){
+    if (j != i) {
+      if (dist(p.getPos().x, p.getPos().y, planets.get(j).getPos().x, planets.get(j).getPos().y) < 
+      ((sqrt(p.getMass()) * 30.0) + (sqrt(planets.get(j).getMass()) * 30.0)) - 20) {
+         collision = true;
+          if (p.getMass() > planets.get(j).getMass()){
+            planets.remove(j);
+            angles.remove(j);
+            
+            p.setMass(p.getMass() * (4.0/5.0));
+          }
+          else if (i < planets.size()) {
+            planets.get(j).setMass(planets.get(j).getMass() * (4.0/5.0));
+            planets.remove(i);
+            angles.remove(i);
+          }
+        }
+      }
+    }
+  if (i < planets.size()){
+    float theta = angles.get(i);
+    float x = p.getA() * cos(theta) + Sun.getPos().x;
+    float y = p.getB() * sin(theta) + Sun.getPos().y ;
+    p.setPos(new PVector(x, y));
     angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
+    if (collision == false) {
+    trail.addFirst(new PVector(x, y));
+      while (trail.size() > planets.size() * 100) {
+        trail.removeLast();
+      }
+      if (blackHole){
+        angles.set(i, theta + p.getSpeed() * mult);
+      }
+      else {
+        angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
+      }
+    }
   }
-}
+ }
 
 void drawStar(){
   stroke(Sun.getColor());

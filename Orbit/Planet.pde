@@ -69,6 +69,10 @@ class Planet {
     return mass;
   }
   
+  void setMass(float m){
+    mass = m;
+  }
+  
   void setRadius(float r){
     this.a = r;
   }
