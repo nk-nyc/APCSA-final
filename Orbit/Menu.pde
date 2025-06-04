@@ -42,11 +42,11 @@ void mouseClicked(){
     Sun.toggleBlackHole();
     Sun.changeMass();
   }
-  
+ 
   if (hitBox(btnX, btnX + btnW, collisionBtnY, collisionBtnY + btnH)){
     collisionMode = !collisionMode;
   }
-  
+ 
   else if (dist(mouseX, mouseY, Sun.getPos().x, Sun.getPos().y) < 150){
     Sun.changeMass();
     for (Planet p : planets){
@@ -71,8 +71,8 @@ void drawMenu() {
   textAlign(CENTER, CENTER);
   text(label, btnX + btnW/2, resetY + btnH/2);
   textAlign(LEFT, BASELINE);
-  
-  
+ 
+ 
   if (paused) {
     fill(150);
   } else {
@@ -90,8 +90,8 @@ void drawMenu() {
   textAlign(CENTER, CENTER);
   text(label2, btnX + btnW/2, btnY + btnH/2);
   textAlign(LEFT, BASELINE);
-  
-  
+ 
+ 
   if (blackHole) {
     fill(150);
   } else {
@@ -104,23 +104,23 @@ void drawMenu() {
   textAlign(CENTER, CENTER);
   text(label3, btnX + btnW/2, blackBtnY + btnH/2);
   textAlign(LEFT, BASELINE);
-  
-  
+ 
+ 
   if (faster) {
     fill(150);
   } else {
     fill(50);
   }
   triangle(speedUpX, speedY, speedUpX, speedY2, speedUpX3, speedY3);
-  
+ 
   if (slower) {
     fill(150);
   } else {
     fill(50);
   }
   triangle(slowX, speedY, slowX, speedY2, slowX3, speedY3);
-  
-  
+ 
+ 
   if (collisionMode) {
     fill(150);
   } else {

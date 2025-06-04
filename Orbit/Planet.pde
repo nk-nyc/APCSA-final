@@ -22,6 +22,16 @@ class Planet {
     this.pos = new PVector(x, y);
     speed = sqrt(mass/radius)/4;
   }
+  
+  public Planet(float m, color col, int a, int b){
+    mass = m;
+    c = col;
+    this.a = a;
+    this.b = b;
+    this.radius = a;
+    this.pos = new PVector(600 + (a * 13.1)/sqrt(2), 600 + (a * 13)/sqrt(2));
+    speed = sqrt(mass/radius)/4;
+  }
 
   //float x = radius + sin(angle) * scalar2;
   //float y = radius + cos(angle) * scalar;
