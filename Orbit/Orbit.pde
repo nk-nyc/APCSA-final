@@ -6,7 +6,8 @@ ArrayList<Planet> planets = new ArrayList<Planet>();
 ArrayList<Float> angles = new ArrayList<Float>();
 LinkedList<PVector> trail = new LinkedList<PVector>();
 ArrayList<PVector> backgroundStars = new ArrayList<PVector>();
-
+float zoom = 1;
+final static float inc = .05;
 
 void setup(){
   size(1000, 1000);
@@ -19,6 +20,16 @@ void setup(){
 }
 
 void draw(){
+  if (mousePressed)
+    if      (mouseButton == LEFT)   zoom += inc;
+    else if (mouseButton == RIGHT)  zoom -= inc;
+
+  translate(width>>1, height>>1);
+  scale(zoom);
+  println(zoom);
+
+  rect(width, height, 0, 0);
+  
   float mult = 1.0;
   if (paused) mult = 0;
   if (blackHole) mult = 3.0;
@@ -145,16 +156,16 @@ void updatePlanet(Planet p, int i, float mult){
     p.setPos(new PVector(x, y)); 
     angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
     trail.addFirst(new PVector(x, y));
-      while (trail.size() > planets.size() * 100) {
-        trail.removeLast();
-      }
-      if (blackHole){
-        angles.set(i, theta + p.getSpeed() * mult);
-      }
-      else {
-        angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
-      }
+    while (trail.size() > planets.size() * 100) {
+      trail.removeLast();
     }
+    if (blackHole){
+      angles.set(i, theta + p.getSpeed() * mult);
+    }
+    else {
+      angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
+    }
+  }
   else {
     boolean collision = false;
     //collision
