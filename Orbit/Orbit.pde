@@ -24,10 +24,9 @@ void draw(){
     if      (mouseButton == LEFT)   zoom += inc;
     else if (mouseButton == RIGHT)  zoom -= inc;
 
-  translate(width>>1, height>>1);
+  translate(width>>width, height>>height);
   scale(zoom);
   println(zoom);
-
   rect(width, height, 0, 0);
   
   float mult = 1.0;
