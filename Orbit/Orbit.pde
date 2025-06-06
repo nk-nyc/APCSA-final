@@ -33,8 +33,13 @@ void draw(){
   else if (faster) mult = 2.0;
   if (blackHole && slower) mult = 2.0;
   else if (slower) mult = 0.5;
-  if (reset) trail.clear();
- 
+  if (reset) { 
+    trail.clear();
+    translateX = 0;
+    translateY = 0;
+    scale = 1;
+  }
+  
   if (!blackHole){
     background(0);
     stroke(255);
