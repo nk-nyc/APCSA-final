@@ -6,8 +6,9 @@ ArrayList<Planet> planets = new ArrayList<Planet>();
 ArrayList<Float> angles = new ArrayList<Float>();
 LinkedList<PVector> trail = new LinkedList<PVector>();
 ArrayList<PVector> backgroundStars = new ArrayList<PVector>();
+Planet[] solarSystem = new Planet[9];
+float[] solarAngles = new float[9];
 float zoom = 1;
-<<<<<<< HEAD
 PImage kaboom;
 final static float inc = .05;
 
@@ -20,17 +21,32 @@ void setup(){
     backgroundStars.add(point);
   }
   kaboom = loadImage("kaboom.png");
+  
+  //solar system, 13 pixels per AU barring ones before Earth
+  solarSystem[0] = (new Planet(0.05, #b8b8b8, 150, 150));
+  solarSystem[1] = new Planet(0.8, #e8cf9e, 180, 180);
+  solarSystem[2] = new Planet(1, #587dc7, 230, 230); //earth
+  solarSystem[3] = new Planet(0.1, #c78158, 250, 250);
+  solarSystem[4] = new Planet(5, #edd0a5, 300, 300);
+  solarSystem[5] = new Planet(3, #dbcc9b, 350, 350);
+  solarSystem[6] = new Planet(4.1, #d1ecff, 380, 380);
+  solarSystem[7] = new Planet(4, #2d54db, 410, 410);
+  solarSystem[8] = new Planet(0.02, #bfb7ab, 490, 490);
+  
+  for (int j = 0; j < 9; j++){
+    solarAngles[j] = j * 0.03;
+  }
 }
 
 void draw(){
-  if (mousePressed)
-    if      (mouseButton == LEFT)   zoom += inc;
-    else if (mouseButton == RIGHT)  zoom -= inc;
+  //if (mousePressed)
+  //  if      (mouseButton == LEFT)   zoom += inc;
+  //  else if (mouseButton == RIGHT)  zoom -= inc;
 
-  translate(width>>width, height>>height);
-  scale(zoom);
-  println(zoom);
-  rect(width, height, 0, 0);
+  //translate(width>>width, height>>height);
+  //scale(zoom);
+  //println(zoom);
+  //rect(width, height, 0, 0);
   
   float mult = 1.0;
   if (paused) mult = 0;
@@ -40,6 +56,11 @@ void draw(){
   if (blackHole && slower) mult = 2.0;
   else if (slower) mult = 0.5;
   if (reset) trail.clear();
+  
+  if (solar) {
+      drawSolar();
+    }
+    
  
   if (!blackHole){
     background(0);
@@ -127,6 +148,45 @@ void drawPlanet(Planet p){
           sqrt(p.getMass()) * 30);
 }
 
+void drawSolar(){
+  float mult = 1.0;
+  if (paused) mult = 0;
+  if (blackHole) mult = 3.0;
+  if (blackHole && faster) mult = 4.0;
+  else if (faster) mult = 2.0;
+  if (blackHole && slower) mult = 2.0;
+  else if (slower) mult = 0.5;
+  if (reset) trail.clear();
+  
+  background(0);
+    stroke(255);
+    for (PVector point : backgroundStars) circle(point.x, point.y, 0.5);
+    stroke(random(150, 255));
+    for (int i = 0; i < backgroundStars.size() / 3 ; i++) {
+      PVector point = backgroundStars.get(i);
+      circle(point.x, point.y, random(0.6));
+    }
+    fill(0);
+    Sun.solarMass();
+    drawStar();
+    text("MASS OF STAR: " + Sun.getMass()
+        + " SOLAR MASSES", 15, 20);
+        
+    for (int i = 0; i < 9; i++){
+      Planet p = solarSystem[i];
+      fill(p.getColor());
+      drawPlanet(p);
+      updatePlanet(p, i, mult);
+      textSize(12);
+            fill(p.getColor());
+      text("PERIOD OF PLANET " + i + ": " +  (double)
+          (Math.round((2 * 3.14 * 100.0) / (p.getSpeed() * Sun.getMass() * 100)))/100
+          + " YEARS",
+          15, 20 + 10 * i);
+     }
+     if (reset) planets.clear(); reset = false;      
+}
+
 
 void drawTrail() {
   stroke(255);
@@ -151,6 +211,24 @@ void addPlanet(float x, float y){
 }
 
 void updatePlanet(Planet p, int i, float mult){
+  if (solar) {
+    float theta = solarAngles[i];
+    float x = p.getA() * cos(theta) + Sun.getPos().x;
+    float y = p.getB() * sin(theta) + Sun.getPos().y ;
+    p.setPos(new PVector(x, y));
+    solarAngles[i] = (theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
+    trail.addFirst(new PVector(x, y));
+    while (trail.size() > planets.size() * 100) {
+      trail.removeLast();
+    }
+    if (blackHole){
+      solarAngles[i] = ( theta + p.getSpeed() * mult);
+    }
+    else {
+      solarAngles[i] = ( theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
+    }
+    return;
+  }
   if (!collisionMode) {
     float theta = angles.get(i);
     float x = p.getA() * cos(theta) + Sun.getPos().x;

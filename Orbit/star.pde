@@ -4,7 +4,7 @@ class star{
   color[] c = {color(245, 182, 135), color(245, 223, 166), color(255, 248, 232), color(237, 240, 242),
                 color(220, 237, 252),  color(181, 215, 245)};
   float[] temps = {2000, 3000, 4000, 6000, 8000, 13000};
-  float[] masses = {0.2, 0.5, 0.7, 1.1, 1.5, 3.1}; 
+  float[] masses = {0.2, 0.5, 0.7, 1.0, 1.5, 3.1}; 
   int col = 0;
   int mass = 0;
   int temp = 0;
@@ -38,6 +38,11 @@ class star{
     blackHole = !blackHole;
     mass = 0;
     col = 0;
+  }
+  
+  void solarMass(){
+    mass = 3;
+    col = 1;
   }
   
   void changeMass(){

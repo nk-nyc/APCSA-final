@@ -4,6 +4,7 @@ boolean slower = false;
 boolean reset = false;
 boolean blackHole = false;
 boolean collisionMode = false;
+boolean solar = true;
 
 final int btnX = 900, btnY = 10, btnW = 80, btnH = 30;
 final int resetY = 100;

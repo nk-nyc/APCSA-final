@@ -29,7 +29,7 @@ class Planet {
     this.a = a;
     this.b = b;
     this.radius = a;
-    this.pos = new PVector(600 + (a * 13.1)/sqrt(2), 600 + (a * 13)/sqrt(2));
+    this.pos = new PVector(600 + a, 600 + b);
     speed = sqrt(mass/radius)/4;
   }
 
