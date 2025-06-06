@@ -36,8 +36,8 @@ void draw(){
   else if (faster) mult = 2.0;
   if (blackHole && slower) mult = 2.0;
   else if (slower) mult = 0.5;
-  if (reset) trail.clear(); 
-  
+  if (reset) trail.clear();
+ 
   if (!blackHole){
     background(0);
     stroke(255);
@@ -49,9 +49,9 @@ void draw(){
     }
     fill(0);
     drawStar();
-    text("MASS OF STAR: " + Sun.getMass() 
+    text("MASS OF STAR: " + Sun.getMass()
         + " SOLAR MASSES", 15, 20);
-        
+       
     for (int i = 1; i < planets.size(); i++){
       Planet p = planets.get(i);
       drawPlanet(p);
@@ -64,7 +64,7 @@ void draw(){
      }
      if (reset) planets.clear(); reset = false;
   }
-  
+ 
   //blackhole
   else {
     background(0);
@@ -76,9 +76,9 @@ void draw(){
           planets.remove(i);
           angles.remove(i);
         }
-        
+       
         else if (planets.get(i).getA() >= 70){
-          planets.get(i).setRadius(planets.get(i).getA() - 1); 
+          planets.get(i).setRadius(planets.get(i).getA() - 1);
         }
          
         else if (planets.get(i).getB() >= 70){
@@ -86,28 +86,28 @@ void draw(){
         }
         if (i < planets.size()){
           drawPlanet(planets.get(i));
-          updatePlanet(planets.get(i), i, mult);   
+          updatePlanet(planets.get(i), i, mult);  
         }
       }
     }
-    
+   
     fill(255);
-    text("MASS OF STAR: " + 
+    text("MASS OF STAR: " +
     Sun.getMass() + " SOLAR MASSES",
     15, 20);
     stroke(255);
     fill(0);
     ellipse(Sun.getPos().x, Sun.getPos().y, 130, 130);
-  
+ 
     for (int i = 1; i < planets.size(); i++){
       fill(255);
       textSize(12);
       text("PERIOD OF PLANET " + i + ": " +  (double)
       (Math.round((2 * 3.14 * 100.0) / (planets.get(i).getSpeed() * Sun.getMass() * 100)))/100
-            + " YEARS", 
+            + " YEARS",
             15, 20 + 10 * i);
     }
-    
+   
     if (reset) planets.clear(); reset = false;
   }
 
@@ -119,8 +119,8 @@ void draw(){
 void drawPlanet(Planet p){
   stroke(p.getColor());
   fill(p.getColor());
-  ellipse(p.getPos().x, p.getPos().y, 
-          sqrt(p.getMass()) * 30, 
+  ellipse(p.getPos().x, p.getPos().y,
+          sqrt(p.getMass()) * 30,
           sqrt(p.getMass()) * 30);
 }
 
@@ -152,7 +152,7 @@ void updatePlanet(Planet p, int i, float mult){
     float theta = angles.get(i);
     float x = p.getA() * cos(theta) + Sun.getPos().x;
     float y = p.getB() * sin(theta) + Sun.getPos().y ;
-    p.setPos(new PVector(x, y)); 
+    p.setPos(new PVector(x, y));
     angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
     trail.addFirst(new PVector(x, y));
     while (trail.size() > planets.size() * 100) {
@@ -170,7 +170,7 @@ void updatePlanet(Planet p, int i, float mult){
     //collision
     for (int j = 0; j < planets.size(); j++){
       if (j != i) {
-        if (dist(p.getPos().x, p.getPos().y, planets.get(j).getPos().x, planets.get(j).getPos().y) < 
+        if (dist(p.getPos().x, p.getPos().y, planets.get(j).getPos().x, planets.get(j).getPos().y) <
            ((sqrt(p.getMass()) * 30.0) + (sqrt(planets.get(j).getMass()) * 30.0)) - 20) {
            collision = true;
            if (p.getMass() > planets.get(j).getMass()){
@@ -186,14 +186,14 @@ void updatePlanet(Planet p, int i, float mult){
          }
        }
     }
-      
+     
     if (i < planets.size()){
       float theta = angles.get(i);
       float x = p.getA() * cos(theta) + Sun.getPos().x;
       float y = p.getB() * sin(theta) + Sun.getPos().y ;
       p.setPos(new PVector(x, y));
       angles.set(i, theta + p.getSpeed() * sqrt(Sun.getMass()) * mult);
-      
+     
       if (collision == false) {
       trail.addFirst(new PVector(x, y));
         while (trail.size() > planets.size() * 100) {
