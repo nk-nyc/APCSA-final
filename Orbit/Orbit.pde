@@ -7,7 +7,9 @@ ArrayList<Float> angles = new ArrayList<Float>();
 LinkedList<PVector> trail = new LinkedList<PVector>();
 ArrayList<PVector> backgroundStars = new ArrayList<PVector>();
 float zoom = 1;
+<<<<<<< HEAD
 PImage kaboom;
+final static float inc = .05;
 
 void setup(){
   size(1000, 1000);
@@ -21,6 +23,15 @@ void setup(){
 }
 
 void draw(){
+  if (mousePressed)
+    if      (mouseButton == LEFT)   zoom += inc;
+    else if (mouseButton == RIGHT)  zoom -= inc;
+
+  translate(width>>width, height>>height);
+  scale(zoom);
+  println(zoom);
+  rect(width, height, 0, 0);
+  
   float mult = 1.0;
   if (paused) mult = 0;
   if (blackHole) mult = 3.0;
