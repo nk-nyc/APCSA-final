@@ -6,8 +6,8 @@ ArrayList<Planet> planets = new ArrayList<Planet>();
 ArrayList<Float> angles = new ArrayList<Float>();
 LinkedList<PVector> trail = new LinkedList<PVector>();
 ArrayList<PVector> backgroundStars = new ArrayList<PVector>();
-float zoom = 1;
-final static float inc = .05;
+float scale = 1;
+float translateX = 0, translateY = 0;
 
 void setup(){
   size(1000, 1000);
@@ -20,14 +20,9 @@ void setup(){
 }
 
 void draw(){
-  if (mousePressed)
-    if      (mouseButton == LEFT)   zoom += inc;
-    else if (mouseButton == RIGHT)  zoom -= inc;
-
-  translate(width>>width, height>>height);
-  scale(zoom);
-  println(zoom);
-  rect(width, height, 0, 0);
+  translate(translateX, translateY);
+  scale(scale);
+  rect(width, height, 0, 0); 
   
   float mult = 1.0;
   if (paused) mult = 0;
@@ -115,6 +110,17 @@ void draw(){
    drawMenu();
 }
 
+void mouseWheel(MouseEvent event) {
+  float e = event.getCount();
+  scale -= e / 30;
+  translateX -= e * mouseX / 100;
+  translateY -= e * mouseY / 100;
+}
+
+void mouseDragged() {
+  translateX += (mouseX - pmouseX);
+  translateY += (mouseY - pmouseY);
+}
 
 void drawPlanet(Planet p){
   stroke(p.getColor());
