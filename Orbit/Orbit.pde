@@ -7,6 +7,7 @@ ArrayList<Float> angles = new ArrayList<Float>();
 LinkedList<PVector> trail = new LinkedList<PVector>();
 ArrayList<PVector> backgroundStars = new ArrayList<PVector>();
 float zoom = 1;
+PImage kaboom;
 
 void setup(){
   size(1000, 1000);
@@ -16,6 +17,7 @@ void setup(){
     PVector point = new PVector(random(width), random(height));
     backgroundStars.add(point);
   }
+  kaboom = loadImage("kaboom.png");
 }
 
 void draw(){
@@ -164,11 +166,13 @@ void updatePlanet(Planet p, int i, float mult){
            ((sqrt(p.getMass()) * 30.0) + (sqrt(planets.get(j).getMass()) * 30.0)) - 20) {
            collision = true;
            if (p.getMass() > planets.get(j).getMass()){
+             image(kaboom, p.getPos().x, p.getPos().y, 50, 50);
              planets.remove(j);
              angles.remove(j);
              p.setMass(p.getMass() * (4.0/5.0));
            }
             else if (i < planets.size()) {
+              image(kaboom, planets.get(j).getPos().x, planets.get(j).getPos().y, 50, 50);
               planets.get(j).setMass(planets.get(j).getMass() * (4.0/5.0));
               planets.remove(i);
               angles.remove(i);
