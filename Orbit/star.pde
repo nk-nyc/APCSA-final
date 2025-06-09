@@ -59,8 +59,13 @@ class star {
     col = 0;
   }
 
-  void changeMass() {
-    if (blackHole) {
+  void solarMass(){
+    mass = 3;
+    col = 1;
+  }
+  
+  void changeMass(){
+    if (blackHole){
       mass = 100;
     }
     else {
