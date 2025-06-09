@@ -54,7 +54,7 @@ void mouseClicked(){
       p.setRadius(p.getRadius() / sqrt(Sun.getMass()));
     }
   }
-  else if (mouseButton == LEFT){
+  else if (mouseButton == LEFT && !solar){
     addPlanet(mouseX, mouseY);
   }
 }

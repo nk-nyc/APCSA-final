@@ -15,7 +15,9 @@ final static float inc = .05;
 void setup(){
   size(1000, 1000);
   smooth();
-  addPlanet(Sun.getPos().x, Sun.getPos().y);
+  if (!solar) {
+    addPlanet(Sun.getPos().x, Sun.getPos().y);
+  }
   for (int i = 0; i < 1000; i ++) {
     PVector point = new PVector(random(width), random(height));
     backgroundStars.add(point);
@@ -23,15 +25,15 @@ void setup(){
   kaboom = loadImage("kaboom.png");
   
   //solar system, 13 pixels per AU barring ones before Earth
-  solarSystem[0] = (new Planet(0.05, #b8b8b8, 150, 150));
-  solarSystem[1] = new Planet(0.8, #e8cf9e, 180, 180);
-  solarSystem[2] = new Planet(1, #587dc7, 230, 230); //earth
-  solarSystem[3] = new Planet(0.1, #c78158, 250, 250);
-  solarSystem[4] = new Planet(5, #edd0a5, 300, 300);
-  solarSystem[5] = new Planet(3, #dbcc9b, 350, 350);
-  solarSystem[6] = new Planet(4.1, #d1ecff, 380, 380);
-  solarSystem[7] = new Planet(4, #2d54db, 410, 410);
-  solarSystem[8] = new Planet(0.02, #bfb7ab, 490, 490);
+  solarSystem[0] = (new Planet(0.05, #b8b8b8, 100, 100, 0.24, 0.053)); //0.053 radians per frame = 0.00000025 radians per sec
+  solarSystem[1] = new Planet(0.8, #e8cf9e, 120, 120, 0.61, 0.04);
+  solarSystem[2] = new Planet(1, #4d9961, 150, 150, 1.00, 0.03); //earth
+  solarSystem[3] = new Planet(0.1, #c78158, 180, 180, 1.88, 0.02);
+  solarSystem[4] = new Planet(5, #edd0a5, 300, 300, 11.86, 0.01);
+  solarSystem[5] = new Planet(3, #dbcc9b, 350, 350, 29.40, 0.003);
+  solarSystem[6] = new Planet(4.1, #d1ecff, 380, 380, 84.12, 0.0006);
+  solarSystem[7] = new Planet(4, #2d54db, 410, 410, 165.21, 0.0001);
+  solarSystem[8] = new Planet(0.02, #bfb7ab, 490, 490, 248.43, 0.00005);
   
   for (int j = 0; j < 9; j++){
     solarAngles[j] = j * 0.03;
@@ -59,6 +61,9 @@ void draw(){
   
   if (solar) {
       drawSolar();
+      drawTrail();
+      drawMenu();
+      return;
     }
     
  
@@ -166,21 +171,23 @@ void drawSolar(){
       PVector point = backgroundStars.get(i);
       circle(point.x, point.y, random(0.6));
     }
-    fill(0);
     Sun.solarMass();
     drawStar();
-    text("MASS OF STAR: " + Sun.getMass()
-        + " SOLAR MASSES", 15, 20);
+    //text("MASS OF STAR: " + Sun.getMass()
+    //    + " SOLAR MASSES", 15, 20);
         
     for (int i = 0; i < 9; i++){
       Planet p = solarSystem[i];
+      noFill();
+      stroke(200);
+      ellipse(Sun.getPos().x, Sun.getPos().y, p.getA() * 2, p.getA() * 2);
+
       fill(p.getColor());
       drawPlanet(p);
       updatePlanet(p, i, mult);
       textSize(12);
             fill(p.getColor());
-      text("PERIOD OF PLANET " + i + ": " +  (double)
-          (Math.round((2 * 3.14 * 100.0) / (p.getSpeed() * Sun.getMass() * 100)))/100
+      text("PERIOD OF PLANET " + (i + 1) + ": " +  p.getPeriod()
           + " YEARS",
           15, 20 + 10 * i);
      }
@@ -201,7 +208,7 @@ void drawTrail() {
 }
 
 void addPlanet(float x, float y){
-  if (!(planets.size() > planetLimit)) {
+  if (!(planets.size() > planetLimit) && !solar) {
     Planet p = new Planet(x, y);
     float theta = atan2((y - Sun.getPos().y)/ p.getB(),
                         (x - Sun.getPos().x) / p.getA());

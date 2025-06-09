@@ -10,6 +10,7 @@ class Planet {
   PVector pos;
   float angle;
   float speed;
+  float period;
   final color[] colors = {#79a3e8, #a18d65, #5a8a7d, #8a665a, #d9bebd, 
                           #d9a179, #79b6d9, #284f66, #9e352f, #b8b8b8};
 
@@ -20,17 +21,18 @@ class Planet {
     this.b = random(100, 500);
     this.radius = a;
     this.pos = new PVector(x, y);
-    speed = sqrt(mass/radius)/4;
+    speed = sqrt(mass)/radius * 4;
   }
   
-  public Planet(float m, color col, int a, int b){
+  public Planet(float m, color col, int a, int b, float p, float sp){
     mass = m;
     c = col;
     this.a = a;
     this.b = b;
     this.radius = a;
     this.pos = new PVector(600 + a, 600 + b);
-    speed = sqrt(mass/radius)/4;
+    speed = sp;
+    this.period = p;
   }
 
   //float x = radius + sin(angle) * scalar2;
@@ -91,6 +93,9 @@ class Planet {
     this.b = r;
   }
   
+  float getPeriod(){
+    return period;
+  }
   
 
 }
