@@ -4,6 +4,7 @@ boolean slower = false;
 boolean reset = false;
 boolean blackHole = false;
 boolean collisionMode = false;
+boolean solar = true;
 
 final int btnX = 900,
 btnY = 10,
@@ -55,7 +56,9 @@ void mouseClicked() {
     for (Planet p: planets) {
       p.setRadius(p.getRadius() / sqrt(Sun.getMass()));
     }
-  } else if (mouseButton == LEFT) {
+  }
+
+  else if (mouseButton == LEFT && !solar){
     addPlanet(mouseX, mouseY);
   }
 }

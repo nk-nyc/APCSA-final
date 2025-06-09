@@ -20,6 +20,7 @@ class Planet {
     #9e352f,
     #b8b8b8
   };
+  float period;
 
   public Planet(float x, float y) {
     this.mass = random(3); //earth mass
@@ -30,15 +31,16 @@ class Planet {
     this.pos = new PVector(x, y);
     speed = sqrt(mass / radius) / 4;
   }
-
-  public Planet(float m, color col, int a, int b) {
+  
+  public Planet(float m, color col, int a, int b, float p, float sp){
     mass = m;
     c = col;
     this.a = a;
     this.b = b;
     this.radius = a;
-    this.pos = new PVector(600 + (a * 13.1) / sqrt(2), 600 + (a * 13) / sqrt(2));
-    speed = sqrt(mass / radius) / 4;
+    this.pos = new PVector(600 + a, 600 + b);
+    speed = sp;
+    this.period = p;
   }
 
   PVector getPos() {
@@ -92,5 +94,10 @@ class Planet {
   void setB(float r) {
     this.b = r;
   }
+  
+  float getPeriod(){
+    return period;
+  }
+  
 
 }
