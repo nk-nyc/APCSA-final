@@ -65,10 +65,8 @@ void draw() {
   
   if (solar) {
       drawSolar();
-      drawTrail();
-      drawMenu();
       return;
-    } 
+  } 
  
   if (!blackHole){
     background(0);
