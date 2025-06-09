@@ -2,10 +2,10 @@ import java.util. * ;
 
 star Sun = new star(500, 500);
 final int planetLimit = 20;
-ArrayList < Planet > planets = new ArrayList < Planet > ();
-ArrayList < Float > angles = new ArrayList < Float > ();
-LinkedList < PVector > trail = new LinkedList < PVector > ();
-ArrayList < PVector > backgroundStars = new ArrayList < PVector > ();
+ArrayList <Planet> planets = new ArrayList <Planet> ();
+ArrayList <Float> angles = new ArrayList <Float> ();
+LinkedList <PVector> trail = new LinkedList <PVector> ();
+ArrayList <PVector> backgroundStars = new ArrayList <PVector> ();
 PImage kaboom;
 float scale = 1;
 float translateX = 0,
@@ -96,24 +96,19 @@ void draw() {
     if (reset) planets.clear();
     reset = false;
   }
+  
   drawTrail();
 
   popMatrix();
-  text("MASS OF STAR: " + Sun.getMass() + " SOLAR MASSES", 15, 20);
 
   fill(255);
   text("MASS OF STAR: " + Sun.getMass() + " SOLAR MASSES", 15, 20);
-
+  
   for (int i = 1; i < planets.size(); i++) {
     Planet p = planets.get(i);
+    fill(p.getColor());
     textSize(12);
     text("PERIOD OF PLANET " + i + ": " + (double)(Math.round((2 * 3.14 * 100.0) / (p.getSpeed() * Sun.getMass() * 100))) / 100 + " YEARS", 15, 20 + 10 * i);
-  }
-
-  for (int i = 1; i < planets.size(); i++) {
-    fill(255);
-    textSize(12);
-    text("PERIOD OF PLANET " + i + ": " + (double)(Math.round((2 * 3.14 * 100.0) / (planets.get(i).getSpeed() * Sun.getMass() * 100))) / 100 + " YEARS", 15, 20 + 10 * i);
   }
 
   drawMenu();
@@ -151,7 +146,7 @@ void drawTrail() {
 }
 
 void addPlanet(float x, float y) {
-  if (! (planets.size() > planetLimit)) {
+  if (!(planets.size() > planetLimit)) {
     Planet p = new Planet(x, y);
     float theta = atan2((y - Sun.getPos().y) / p.getB(), (x - Sun.getPos().x) / p.getA());
     planets.add(p);
