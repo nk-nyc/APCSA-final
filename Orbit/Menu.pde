@@ -70,7 +70,7 @@ void drawMenu() {
   drawRectBtn(btnX, collisionBtnY, "Collisions", collisionMode);
   drawRectBtn(btnX, solarBtnY, "Solar Sys",  solar);
 
-   String pauseLabel;
+  String pauseLabel;
   if (paused) {
     pauseLabel = "Resume";
   } else {
@@ -100,7 +100,7 @@ boolean hitBox(int w, int x, int y, int z) {
 
 void drawRectBtn(int x, int y, String label, boolean on) {
   if (on) fill(150);
-  else    fill(50);
+  else fill(50);
   stroke(0);
   rect(x, y, btnW, btnH);
   fill(255);

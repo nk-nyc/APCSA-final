@@ -228,6 +228,9 @@ void blackHoleLogic(int i) {
 }
 
 void addPlanet(float x, float y) {
+  if (dist(x, y, Sun.getPos().x, Sun.getPos().y) < 50 * sqrt(Sun.getMass())) {
+    return;
+  }
   if (!(planets.size() > planetLimit) && !solar) {
     Planet p = new Planet(x, y);
     float theta = atan2((y - Sun.getPos().y) / p.getB(), (x - Sun.getPos().x) / p.getA());
@@ -325,7 +328,7 @@ void updateCollisionPlanet(Planet p, int i, float mult) {
 
 // MOVING ==================================================================
 
-void mouseWheel(MouseEvent event) {
+void mouseWheel(MouseEvent event) {  
   float e = event.getCount();
   float oldScale = scale;
 
