@@ -1,5 +1,4 @@
 class star {
-
   PVector pos;
   color[] c = {
     color(245, 182, 135),
@@ -30,6 +29,8 @@ class star {
   int temp = 0;
   boolean blackHole = false;
   //mass in solar masses
+  
+ 
   star(float x, float y) {
     pos = new PVector(x, y);
   }
