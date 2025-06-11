@@ -128,6 +128,50 @@ void drawHUD() {
   drawMenu();
 }
 
+// GAME LOGIC ==================================================================
+
+float getSpeedMult() {
+  if (paused) return 0;
+  if (blackHole && faster) return 4;
+  if (blackHole) return 3;
+  if (faster) return 2;
+  if (slower) return 0.5;
+  return 1;
+}
+
+void addTrailPoint(float x, float y) {
+  trail.addFirst(new PVector(x, y));
+  while (trail.size() > planets.size() * 100) {
+    trail.removeLast();
+  }
+}
+
+void blackHoleLogic(int i) {
+  if (dist(planets.get(i).getPos().x, planets.get(i).getPos().y, Sun.getPos().x, Sun.getPos().y) < 70) {
+    planets.remove(i);
+    angles.remove(i);
+    return;
+  }
+
+  if (planets.get(i).getA() >= 70) {
+    planets.get(i).setRadius(planets.get(i).getA() - 1);
+  } else if (planets.get(i).getB() >= 70) {
+    planets.get(i).setB(planets.get(i).getB() - 1);
+  }
+}
+
+void addPlanet(float x, float y) {
+  if (dist(x, y, Sun.getPos().x, Sun.getPos().y) < 50 * sqrt(Sun.getMass())) {
+    return;
+  }
+  if (!(planets.size() > planetLimit) && !solar) {
+    Planet p = new Planet(x, y);
+    float theta = atan2((y - Sun.getPos().y) / p.getB(), (x - Sun.getPos().x) / p.getA());
+    planets.add(p);
+    angles.add(theta);
+  }
+}
+
 
 // DRAW PARTS ==================================================================
 
@@ -202,49 +246,6 @@ void drawStarfield() {
     float alpha = map(t, 0, 1,  30, 255); // dim–to–bright
     fill(255, alpha);
     ellipse(pt.x, pt.y, size, size);
-  }
-}
-// GAME LOGIC ==================================================================
-
-float getSpeedMult() {
-  if (paused) return 0;
-  if (blackHole && faster) return 4;
-  if (blackHole) return 3;
-  if (faster) return 2;
-  if (slower) return 0.5;
-  return 1;
-}
-
-void addTrailPoint(float x, float y) {
-  trail.addFirst(new PVector(x, y));
-  while (trail.size() > planets.size() * 100) {
-    trail.removeLast();
-  }
-}
-
-void blackHoleLogic(int i) {
-  if (dist(planets.get(i).getPos().x, planets.get(i).getPos().y, Sun.getPos().x, Sun.getPos().y) < 70) {
-    planets.remove(i);
-    angles.remove(i);
-    return;
-  }
-
-  if (planets.get(i).getA() >= 70) {
-    planets.get(i).setRadius(planets.get(i).getA() - 1);
-  } else if (planets.get(i).getB() >= 70) {
-    planets.get(i).setB(planets.get(i).getB() - 1);
-  }
-}
-
-void addPlanet(float x, float y) {
-  if (dist(x, y, Sun.getPos().x, Sun.getPos().y) < 50 * sqrt(Sun.getMass())) {
-    return;
-  }
-  if (!(planets.size() > planetLimit) && !solar) {
-    Planet p = new Planet(x, y);
-    float theta = atan2((y - Sun.getPos().y) / p.getB(), (x - Sun.getPos().x) / p.getA());
-    planets.add(p);
-    angles.add(theta);
   }
 }
 
