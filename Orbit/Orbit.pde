@@ -169,6 +169,7 @@ void drawPlanet(Planet p) {
 
 
 void drawSolar(){
+
   float mult = 1.0;
   if (paused) mult = 0;
   if (blackHole) mult = 3.0;
